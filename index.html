@@ -2,65 +2,79 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
-  
+  <link rel="stylesheet" href="styles.css">
   <title>Frontend Mentor | Weather app</title>
-
-  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
-  <style>
-    .attribution { font-size: 11px; text-align: center; }
-    .attribution a { color: hsl(228, 45%, 44%); }
-  </style>
 </head>
 <body>
 
-  Units
+  <header class="page-header">
+    <div class="logo"><img src="./assets/images/logo.svg" alt="Weather Now"></div>
+    <div class="units-dropdown">
+      <button type="button" class="units-toggle" aria-haspopup="true" aria-expanded="false"><img src="./assets/images/icon-units.svg" alt="Open unit settings"><span>Units</span></button>
+      <div class="dropdown-menu" role="menu">
+        <div class="unit-group" role="group" aria-labelledby="temp-label"><p id="temp-label" class="unit-group-label">Temperature</p><div class="radio-option"><input type="radio" id="celsius" name="temperature" value="metric" checked><label for="celsius">Celsius (°C)</label></div><div class="radio-option"><input type="radio" id="fahrenheit" name="temperature" value="imperial"><label for="fahrenheit">Fahrenheit (°F)</label></div></div>
+        <div class="unit-group" role="group" aria-labelledby="wind-label"><p id="wind-label" class="unit-group-label">Wind Speed</p><div class="radio-option"><input type="radio" id="kmh" name="wind" value="metric" checked><label for="kmh">km/h</label></div><div class="radio-option"><input type="radio" id="mph" name="wind" value="imperial"><label for="mph">mph</label></div></div>
+        <div class="unit-group" role="group" aria-labelledby="precip-label"><p id="precip-label" class="unit-group-label">Precipitation</p><div class="radio-option"><input type="radio" id="mm" name="precipitation" value="metric" checked><label for="mm">Millimeters (mm)</label></div><div class="radio-option"><input type="radio" id="in" name="precipitation" value="imperial"><label for="in">Inches (in)</label></div></div>
+      </div>
+    </div>
+  </header>
 
-  Switch to Imperial/Metric
+  <main class="main-content">
+    <h1 class="main-title">How's the sky looking today?</h1>
+    <section class="search-section"><form class="search-form"><input type="search" placeholder="Search for a city, e.g., New York" class="search-input"><button type="submit" class="search-button" aria-label="Search"><img src="./assets/images/icon-search.svg" alt=""></button></form><ul class="search-suggestions"></ul></section>
+    
+    <section class="current-weather">
+        <div class="loading-indicator">
+            <div class="dots">
+                <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+            </div>
+            <p>Loading...</p>
+        </div>
+        <div class="current-weather-main">
+            <img src="./assets/images/icon-partly-cloudy.webp" alt="Partly cloudy" class="current-weather-icon">
+            <p class="current-temp">72°</p>
+            <p class="current-weather-summary">Partly Cloudy</p>
+            <p class="current-location">New York, USA</p>
+            <p class="current-date">Sunday, 21 Sep</p>
+        </div>
+    </section>
 
-  Temperature
+    <section class="weather-details">
+        <ul class="details-list">
+            <li class="detail-item"><p class="detail-label">Feels like</p><p class="detail-value">68°</p></li>
+            <li class="detail-item"><p class="detail-label">Humidity</p><p class="detail-value">80%</p></li>
+            <li class="detail-item"><p class="detail-label">Wind</p><p class="detail-value">5 mph</p></li>
+            <li class="detail-item"><p class="detail-label">Precipitation</p><p class="detail-value">0.2 in</p></li>
+        </ul>
+    </section>
 
-  Celsius (°C)
-  Fahrenheit (°F)
+    <section class="hourly-forecast">
+        <h2 class="forecast-title">Hourly forecast</h2>
+        <div class="day-selector-loading">-</div>
+        <div class="day-selector"><button type="button" class="day-tab active" aria-pressed="true">Today</button><button type="button" class="day-tab" aria-pressed="false">Tomorrow</button></div>
+        <ul class="hourly-forecast-list">
+            <li class="hour-card"><p class="hour-time">3 PM</p><img src="./assets/images/icon-partly-cloudy.webp" alt="Partly Cloudy" class="hour-icon"><p class="hour-temp">72°</p></li>
+            <li class="hour-card"><p class="hour-time">4 PM</p><img src="./assets/images/icon-sunny.webp" alt="Sunny" class="hour-icon"><p class="hour-temp">70°</p></li>
+        </ul>
+    </section>
 
-  Wind Speed
-
-  km/h
-  mph
-
-  Precipitation
-
-  Millimeters (mm)
-  Inches (in)
-
-  How's the sky looking today?
-
-  Search for a city, e.g., New York
-  Search
-
-  Feels like
-  <!-- Insert temperature here -->
-
-  Humidity
-  <!-- Insert humidity here -->
-
-  Wind
-  <!-- Insert wind here -->   
-  
-  Precipitation
-  <!-- Insert precipitation here -->
-
-  Daily forecast
-  <!-- Insert daily forecast for the next 7 days here -->
-
-  Hourly forecast
-  <!-- Insert hourly forecast for the selected day here -->
+    <section class="daily-forecast">
+        <h2 class="forecast-title">Daily forecast</h2>
+        <ul class="daily-forecast-list">
+            <li class="day-card"><p class="day-name">Mon</p><img src="./assets/images/icon-sunny.webp" alt="Sunny" class="day-icon"><p class="day-temp">80° / 65°</p></li>
+            <li class="day-card"><p class="day-name">Tue</p><img src="./assets/images/icon-partly-cloudy.webp" alt="Partly Cloudy" class="day-icon"><p class="day-temp">75° / 62°</p></li>
+            <li class="day-card"><p class="day-name">Wed</p><img src="./assets/images/icon-rain.webp" alt="Rain" class="day-icon"><p class="day-temp">70° / 58°</p></li>
+        </ul>
+    </section>
+  </main>
 
   <div class="attribution">
     Challenge by <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a>. 
-    Coded by <a href="#">Your Name Here</a>.
+    Coded by <a href="#">Jazp #0400</a>.
   </div>
+
+  <script src="main.js" defer></script>
 </body>
 </html>
