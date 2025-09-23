@@ -1,4 +1,12 @@
-@font-face { /* ... Font definitions ... */ }
+@font-face { 
+    font-family: 'Bricolage Grotesque';
+    src: url('./assets/fonts/Bricolage_Grotesque/BricolageGrotesque-VariableFont_opsz,wdth,wght.ttf');
+ }
+
+ @font-face {
+    font-family: 'DM Sans';
+    src: url('./assets/fonts/DM_Sans/DMSans-VariableFont_opsz,wght.ttf');
+ }
 
 /* --- General Reset & Base Styles --- */
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -12,8 +20,31 @@ h1, h2, h3, h4, h5, h6 { font-family: 'Bricolage Grotesque', sans-serif; }
 /* --- Units Dropdown --- */
 .units-dropdown { position: relative; }
 .units-toggle { display: flex; align-items: center; gap: 0.75rem; background-color: hsl(243, 27%, 20%); border-radius: 8px; padding: 0.75rem 1.25rem; color: white; font-family: 'DM Sans', sans-serif; font-size: 1rem; cursor: pointer; border: none; }
-.dropdown-menu { display: none; position: absolute; top: 100%; right: 0; background-color: hsl(243, 23%, 24%); border-radius: 8px; padding: 1rem; margin-top: 0.5rem; z-index: 10; width: 250px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
-.dropdown-menu.active { display: block; }
+.dropdown-menu {
+  /* display: none; */ /* Replaced by opacity/visibility for animation */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: opacity 0.2s ease-out, transform 0.2s ease-out, visibility 0.2s;
+
+  position: absolute; 
+  top: 100%; 
+  right: 0; 
+  background-color: hsl(243, 23%, 24%); 
+  border-radius: 8px; 
+  padding: 1rem; 
+  margin-top: 0.5rem; 
+  z-index: 10; 
+  width: 250px; 
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.dropdown-menu.active {
+  /* display: block; */ /* Replaced by opacity/visibility for animation */
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
 .unit-group { margin-bottom: 1rem; }
 .unit-group:last-child { margin-bottom: 0; }
 .unit-group-label { font-weight: 700; margin-bottom: 0.5rem; color: hsl(240, 6%, 70%); }
@@ -57,7 +88,19 @@ h1, h2, h3, h4, h5, h6 { font-family: 'Bricolage Grotesque', sans-serif; }
 .forecast-title { font-size: 1.5rem; margin-bottom: 1rem; }
 .hourly-forecast-list { display: flex; flex-direction: column; gap: 1rem; list-style: none; overflow-y: auto; }
 .daily-forecast-list { display: flex; gap: 1rem; list-style: none; overflow-x: auto; }
-.hour-card { display: flex; align-items: center; justify-content: space-between; background-color: hsl(243, 23%, 24%); border-radius: 12px; padding: 0.75rem 1rem; }
+.hour-card {
+  display: grid;
+  grid-template-columns: auto auto 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  background-color: hsl(243, 23%, 24%);
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+}
+
+.hour-card .hour-icon { grid-column: 1; }
+.hour-card .hour-time { grid-column: 2; }
+.hour-card .hour-temp { grid-column: 4; justify-self: end; }
 .day-card { background-color: hsl(243, 23%, 24%); border-radius: 12px; padding: 1rem; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; min-width: 100px; }
 .hour-icon, .day-icon { width: 48px; height: 48px; }
 .day-selector { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
@@ -82,3 +125,27 @@ body.is-loading .day-selector-loading { display: block; background: none; border
 body.is-loading .hourly-forecast-list, body.is-loading .daily-forecast-list { display: none; }
 
 .attribution { display: none; }
+
+/* --- Responsive Styles --- */
+@media (max-width: 900px) {
+  body { padding: 1rem; }
+  .main-content {
+    grid-template-columns: 1fr; /* Switch to a single column */
+    grid-template-rows: auto; /* Let rows size automatically */
+  }
+
+  /* Re-order and span full width for all sections */
+  .main-title { grid-row: 1; grid-column: 1 / -1; }
+  .search-section { grid-row: 2; grid-column: 1 / -1; }
+  .current-weather { 
+    grid-row: 3; grid-column: 1 / -1;
+    background-image: url('./assets/images/bg-today-small.svg');
+  }
+  .weather-details { grid-row: 4; grid-column: 1 / -1; }
+  .hourly-forecast { grid-row: 5; grid-column: 1 / -1; }
+  .daily-forecast { grid-row: 6; grid-column: 1 / -1; }
+
+  .details-list {
+    grid-template-columns: 1fr 1fr; /* 2x2 grid on smaller screens */
+  }
+}

@@ -163,7 +163,7 @@ function updateHourlyForecast(hourlyData, day) {
         const hour = date.toLocaleTimeString('en-US', { hour: 'numeric', hour12: true });
         const weatherInfo = getWeatherInfo(hourlyData.weather_code[i]);
         const temp = Math.round(hourlyData.temperature_2m[i]);
-        const cardHTML = `<li class="hour-card"><p class="hour-time">${hour}</p><img src="./assets/images/${weatherInfo.icon}" alt="${weatherInfo.description}" class="hour-icon"><p class="hour-temp">${temp}°</p></li>`;
+        const cardHTML = `<li class="hour-card"><img src="./assets/images/${weatherInfo.icon}" alt="${weatherInfo.description}" class="hour-icon"><p class="hour-time">${hour}</p><p class="hour-temp">${temp}°</p></li>`;
         hourlyForecastListEl.innerHTML += cardHTML;
     }
 }
