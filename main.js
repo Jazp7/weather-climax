@@ -27,8 +27,29 @@ const unitsToggleBtn = document.querySelector(".units-toggle");
 
 // --- Mappers & Helpers ---
 function getWeatherInfo(weatherCode) {
-  const weatherMap = { 0: { description: "Clear sky", icon: "icon-sunny.webp" }, 1: { description: "Mainly clear", icon: "icon-partly-cloudy.webp" }, 2: { description: "Partly cloudy", icon: "icon-partly-cloudy.webp" }, 3: { description: "Overcast", icon: "icon-overcast.webp" }, 45: { description: "Fog", icon: "icon-fog.webp" }, 48: { description: "Depositing rime fog", icon: "icon-fog.webp" }, 51: { description: "Light drizzle", icon: "icon-drizzle.webp" }, 53: { description: "Moderate drizzle", icon: "icon-drizzle.webp" }, 55: { description: "Dense drizzle", icon: "icon-drizzle.webp" }, 61: { description: "Slight rain", icon: "icon-rain.webp" }, 63: { description: "Moderate rain", icon: "icon-rain.webp" }, 65: { description: "Heavy rain", icon: "icon-rain.webp" }, 71: { description: "Slight snow fall", icon: "icon-snow.webp" }, 73: { description: "Moderate snow fall", icon: "icon-snow.webp" }, 75: { description: "Heavy snow fall", icon: "icon-snow.webp" }, 80: { description: "Slight rain showers", icon: "icon-rain.webp" }, 81: { description: "Moderate rain showers", icon: "icon-rain.webp" }, 82: { description: "Violent rain showers", icon: "icon-rain.webp" }, 95: { description: "Thunderstorm", icon: "icon-storm.webp" } };
-  return weatherMap[weatherCode] || { description: "Unknown", icon: "icon-error.svg" };
+    const weatherMap = { 
+        0: { description: "Clear sky", icon: "icon-sunny.webp" }, 
+        1: { description: "Mainly clear", icon: "icon-partly-cloudy.webp" }, 
+        2: { description: "Partly cloudy", icon: "icon-partly-cloudy.webp" }, 
+        3: { description: "Overcast", icon: "icon-overcast.webp" }, 
+        45: { description: "Fog", icon: "icon-fog.webp" }, 
+        48: { description: "Depositing rime fog", icon: "icon-fog.webp" }, 
+        51: { description: "Light drizzle", icon: "icon-drizzle.webp" }, 
+        53: { description: "Moderate drizzle", icon: "icon-drizzle.webp" }, 
+        55: { description: "Dense drizzle", icon: "icon-drizzle.webp" }, 
+        61: { description: "Slight rain", icon: "icon-rain.webp" }, 
+        63: { description: "Moderate rain", icon: "icon-rain.webp" }, 
+        65: { description: "Heavy rain", icon: "icon-rain.webp" }, 
+        71: { description: "Slight snow fall", icon: "icon-snow.webp" }, 
+        73: { description: "Moderate snow fall", icon: "icon-snow.webp" }, 
+        75: { description: "Heavy snow fall", icon: "icon-snow.webp" }, 
+        80: { description: "Slight rain showers", icon: "icon-rain.webp" }, 
+        81: { description: "Moderate rain showers", icon: "icon-rain.webp" }, 
+        82: { description: "Violent rain showers", icon: "icon-rain.webp" }, 
+        95: { description: "Thunderstorm", icon: "icon-storm.webp" } 
+    };
+
+    return weatherMap[weatherCode] || { description: "Unknown", icon: "icon-error.svg" };
 }
 
 // --- Update UI Functions ---
@@ -39,13 +60,13 @@ function updateHourlyForecast(hourlyData, day) { /* ... same as before ... */ }
 
 // --- API Fetching ---
 async function getCoordinates(cityName, count = 1) {
-  const geocodingUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${cityName}&count=${count}`;
-  try {
-    const response = await fetch(geocodingUrl);
-    if (!response.ok) throw new Error("Geocoding API call failed");
-    const data = await response.json();
-    return data.results || [];
-  } catch (error) { console.error("Geocoding Error:", error); return []; }
+    const geocodingUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${cityName}&count=${count}`;
+    try {
+        const response = await fetch(geocodingUrl);
+        if (!response.ok) throw new Error("Geocoding API call failed");
+        const data = await response.json();
+        return data.results || [];
+    } catch (error) { console.error("Geocoding Error:", error); return []; }
 }
 
 async function fetchWeather(latitude, longitude, units) { /* ... same as before ... */ }
@@ -120,19 +141,20 @@ document.addEventListener('DOMContentLoaded', () => initialLoad());
 
 // Re-add full function bodies that were omitted for brevity
 function updateCurrentWeather(weatherData, locationData, units) {
-  const { apparent_temperature, precipitation, relative_humidity_2m, temperature_2m, weather_code, wind_speed_10m } = weatherData.current;
-  const weatherInfo = getWeatherInfo(weather_code);
-  currentTempEl.textContent = `${Math.round(temperature_2m)}°`;
-  currentWeatherSummaryEl.textContent = weatherInfo.description;
-  currentWeatherIconEl.src = `./assets/images/${weatherInfo.icon}`;
-  currentWeatherIconEl.alt = weatherInfo.description;
-  currentLocationEl.textContent = `${locationData.name}, ${locationData.country}`;
-  currentDateEl.textContent = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
-  feelsLikeEl.textContent = `${Math.round(apparent_temperature)}°`;
-  humidityEl.textContent = `${relative_humidity_2m}%`;
-  windEl.textContent = `${Math.round(wind_speed_10m)} ${units.wind}`;
-  precipitationEl.textContent = `${precipitation} ${units.precipitation}`;
+    const { apparent_temperature, precipitation, relative_humidity_2m, temperature_2m, weather_code, wind_speed_10m } = weatherData.current;
+    const weatherInfo = getWeatherInfo(weather_code);
+    currentTempEl.textContent = `${Math.round(temperature_2m)}°`;
+    currentWeatherSummaryEl.textContent = weatherInfo.description;
+    currentWeatherIconEl.src = `./assets/images/${weatherInfo.icon}`;
+    currentWeatherIconEl.alt = weatherInfo.description;
+    currentLocationEl.textContent = `${locationData.name}, ${locationData.country}`;
+    currentDateEl.textContent = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
+    feelsLikeEl.textContent = `${Math.round(apparent_temperature)}°`;
+    humidityEl.textContent = `${relative_humidity_2m}%`;
+    windEl.textContent = `${Math.round(wind_speed_10m)} ${units.wind}`;
+    precipitationEl.textContent = `${precipitation} ${units.precipitation}`;
 }
+
 function updateDailyForecast(dailyData) {
     dailyForecastListEl.innerHTML = "";
     for (let i = 1; i < dailyData.time.length; i++) {
@@ -145,6 +167,7 @@ function updateDailyForecast(dailyData) {
         dailyForecastListEl.innerHTML += cardHTML;
     }
 }
+
 function updateHourlyForecast(hourlyData, day) {
     hourlyForecastListEl.innerHTML = "";
     let startIndex = 0;
@@ -157,8 +180,9 @@ function updateHourlyForecast(hourlyData, day) {
         const tomorrowISO = tomorrow.toISOString().split('T')[0];
         startIndex = hourlyData.time.findIndex(timeStr => timeStr.startsWith(tomorrowISO));
     }
+
     for (let i = startIndex; i < startIndex + 12; i++) {
-        if(i >= hourlyData.time.length) break;
+        if (i >= hourlyData.time.length) break;
         const date = new Date(hourlyData.time[i]);
         const hour = date.toLocaleTimeString('en-US', { hour: 'numeric', hour12: true });
         const weatherInfo = getWeatherInfo(hourlyData.weather_code[i]);
@@ -167,24 +191,27 @@ function updateHourlyForecast(hourlyData, day) {
         hourlyForecastListEl.innerHTML += cardHTML;
     }
 }
+
 async function fetchWeather(latitude, longitude, units) {
-  const precipUnit = units.precipitation === 'in' ? 'inch' : 'mm';
-  const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m&hourly=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=auto&temperature_unit=${units.temperature}&wind_speed_unit=${units.wind}&precipitation_unit=${precipUnit}`;
-  try {
-    const response = await fetch(apiUrl);
-    if (!response.ok) throw new Error(`Weather API call failed`);
-    return await response.json();
-  } catch (error) { console.error("Weather Fetching Error:", error); }
+    const precipUnit = units.precipitation === 'in' ? 'inch' : 'mm';
+    const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m&hourly=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=auto&temperature_unit=${units.temperature}&wind_speed_unit=${units.wind}&precipitation_unit=${precipUnit}`;
+    try {
+        const response = await fetch(apiUrl);
+        if (!response.ok) throw new Error(`Weather API call failed`);
+        return await response.json();
+    } catch (error) { console.error("Weather Fetching Error:", error); }
 }
+
 function handleUnitChange(e) {
     if (e.target.type !== 'radio') return;
     const unitType = e.target.name;
     const unitValue = e.target.id;
-    if(unitType === 'temperature') currentUnits.temperature = unitValue;
-    if(unitType === 'wind') currentUnits.wind = unitValue;
-    if(unitType === 'precipitation') currentUnits.precipitation = unitValue;
+    if (unitType === 'temperature') currentUnits.temperature = unitValue;
+    if (unitType === 'wind') currentUnits.wind = unitValue;
+    if (unitType === 'precipitation') currentUnits.precipitation = unitValue;
     fetchAndDisplayWeather(currentLocation, currentUnits);
 }
+
 function handleDayChange(e) {
     if (!e.target.classList.contains('day-tab')) return;
     const newSelectedDay = e.target.textContent.toLowerCase();
